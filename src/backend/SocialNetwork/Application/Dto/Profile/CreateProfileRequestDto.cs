@@ -2,7 +2,8 @@ namespace Application.Dto.Profile;
 
 public class CreateProfileRequestDto
 {
+    public string Login { get; set; }
     public string FirstName { get; set; }
-    public string SecondName { get; set; }
-    public string Pol { get; set; }
+    public string LastName { get; set; }
+    public string Patronymic { get; set; }
 }

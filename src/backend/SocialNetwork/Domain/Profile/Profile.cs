@@ -40,7 +40,7 @@ public class Profile
     /// </summary>
     public IReadOnlyCollection<Guid> Followers { get; set; }
 
-    public Result<Profile> Create(
+    public static Result<Profile> Create(
         string login,
         string firstName,
         string lastName,
