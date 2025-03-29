@@ -64,6 +64,6 @@ SocialNetwork
 
 5. Сформировать первичные Dockerfile и docker-compose Вашей DSS и её инфраструктуры (на основе шаблона).
 
-[Docker](/../Dockerfile)
+[Docker](https://github.com/Mekys/ddss_develop_course/blob/Lub_1/Dockerfile)
 
-[docker-compose.yml](/../docker-compose.yml)
+[docker-compose.yml](https://github.com/Mekys/ddss_develop_course/blob/Lub_1/.docker-compose.yml)
