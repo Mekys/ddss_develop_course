@@ -4,7 +4,7 @@ namespace Domain.Post.Events;
 
 public class PostCommented
 {
-    public Comment Comment { get; set; }     
+    public Comment Comment { get; set; }
     public PostCommented(Comment comment)
     {
         Comment = comment;

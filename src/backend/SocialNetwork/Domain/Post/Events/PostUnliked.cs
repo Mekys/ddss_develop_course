@@ -2,7 +2,7 @@ using Domain.Post.ValueObjects;
 
 namespace Domain.Post.Events;
 
-public class PostUnliked 
+public class PostUnliked
 {
     public PostUnliked(Like like, Guid postId)
     {

@@ -4,5 +4,5 @@ namespace Application.Repositories;
 
 public interface IPostRepository : IBaseRepository<Post>
 {
-    
+
 }

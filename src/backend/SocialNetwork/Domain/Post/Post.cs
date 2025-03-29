@@ -1,48 +1,52 @@
-﻿using Domain.Post.Entities;
-using Domain.Post.ValueObjects;
-using MediatR;
+﻿using System.Collections.ObjectModel;
+using Domain.Post.Entities;
 using Domain.Post.Events;
+using Domain.Post.ValueObjects;
 using FluentResults;
+using MediatR;
 
 namespace Domain.Post
 {
     public class Post
     {
+        private Post(){}
         public Guid Id { get; set; }
         public Guid AuthorId { get; set; }
         public Guid ProfileId { get; set; }
         public DateTime CreatedAtUtc { get; set; }
         public bool IsRemoved { get; set; }
-        public PostAvailability PostAvailability { get; set; } = new();
+        public PostAvailability PostAvailability { get; private set; }
+        public IReadOnlyCollection<Comment> Comments { get; private set; }
+        public List<Like> Likes { get; private set; }
+        public List<Media> Media { get; private set; }
 
         private Post(
             Guid authorId,
             Guid profileId,
             DateTime createdAtUtc,
-            PostAvailability postAvailability)
+            PostAvailability postAvailability,
+            List<Media> media)
         {
             AuthorId = authorId;
             ProfileId = profileId;
             CreatedAtUtc = createdAtUtc;
             PostAvailability = postAvailability;
-            
+            Media = media;
+
             Id = Guid.NewGuid();
             Comments = new List<Comment>();
             Likes = new List<Like>();
         }
-        
-        public IReadOnlyCollection<Comment> Comments { get; set; }
-        public IReadOnlyCollection<Like> Likes { get; private set;}
 
         public void AddLike(Like like, IMediator? mediator = null)
         {
-            Likes = [..Likes, like];
+            Likes = [.. Likes, like];
             mediator?.Publish(new PostLiked(like, Id));
         }
 
         public void AddComment(Comment comment, IMediator? mediator = null)
         {
-            Comments = [..Comments, comment];
+            Comments = [.. Comments, comment];
             mediator?.Publish(new PostCommented(comment));
         }
 
@@ -52,11 +56,11 @@ namespace Domain.Post
             {
                 return;
             }
-            
+
             Likes = Likes
                 .Where(x => x != like)
-                .ToArray();
-             
+                .ToList();
+
             mediator?.Publish(new PostUnliked(like, Id));
         }
 
@@ -67,13 +71,14 @@ namespace Domain.Post
             {
                 return;
             }
-            
+
             comment.IsRemoved = true;
         }
 
-        public Result<Post> Create(
+        public static Result<Post> Create(
             Guid authorId,
             Guid profileId,
+            List<Media> media,
             PostAvailability postAvailability = null)
         {
             if (authorId == Guid.Empty)
@@ -85,10 +90,11 @@ namespace Domain.Post
             {
                 return Result.Fail(new RequiredFieldNotSet(nameof(profileId)));
             }
-            
+
             postAvailability ??= PostAvailability.Default;
-            
-            return new Post(authorId, profileId, DateTime.UtcNow, postAvailability);
+            media ??= new List<Media>();
+
+            return new Post(authorId, profileId, DateTime.UtcNow, postAvailability, media);
         }
     }
 }

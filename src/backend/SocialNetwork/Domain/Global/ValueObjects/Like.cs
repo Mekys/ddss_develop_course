@@ -1,11 +1,11 @@
-﻿using Domain.Post.Events;
-using FluentResults;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Post.Events;
+using FluentResults;
+using MediatR;
 
 namespace Domain.Post.ValueObjects
 {
@@ -13,9 +13,9 @@ namespace Domain.Post.ValueObjects
     {
         public Guid LikedById { get; set; }
         public DateTime CreatedAtUtc { get; set; }
-        
+
         private Like(
-            Guid likedById, 
+            Guid likedById,
             DateTime createdAtUtc)
         {
             LikedById = likedById;
@@ -23,7 +23,7 @@ namespace Domain.Post.ValueObjects
         }
 
         public static Result<Like> Create(
-            Guid likedById, 
+            Guid likedById,
             DateTime createdAtUtc)
         {
             if (likedById == default)
@@ -35,7 +35,7 @@ namespace Domain.Post.ValueObjects
             {
                 return Result.Fail(new FutureTimeError());
             }
-          
+
             return new Like(likedById, createdAtUtc);
         }
     }

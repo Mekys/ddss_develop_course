@@ -1,36 +1,72 @@
-using Application.Command;
-using Application.Dto.Profile;
-using MediatR;
+using Application.Services;
+using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class ProfileController : ControllerBase
+namespace API.Controllers
 {
-    private readonly IMediator _mediator;
-
-    public ProfileController(IMediator mediator)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProfilesController : ControllerBase
     {
-        _mediator = mediator;
-    }
+        private readonly IProfileService _profileService;
 
-    [HttpPost]
-    public async Task<IActionResult> CreateProfile(CreateProfileRequestDto requestDto)
-    {
-        if (requestDto is null)
+        public ProfilesController(IProfileService profileService)
         {
-            return BadRequest();
+            _profileService = profileService;
         }
-        
-        var result = await _mediator.Send(CreateProfileCommand.GetFrom(requestDto));
 
-        if (result.IsSuccess)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
+            var result = await _profileService.Register(registerDto);
+            
+            if (result.IsFailed)
+            {
+                if (result.HasError(error => error.Message == "User with login exists"))
+                {
+                    return Conflict(result.Errors);
+                }
+                return BadRequest(result.Errors);
+            }
+
+            return CreatedAtAction(
+                nameof(GetProfile), 
+                new { userId = result.Value.Id }, 
+                result.Value);
+        }
+
+        [HttpPost("{subscriberId}/subscribe/{subscribeToId}")]
+        public async Task<IActionResult> Subscribe(Guid subscriberId, Guid subscribeToId)
+        {
+            var result = await _profileService.Subscribe(subscriberId, subscribeToId);
+            
+            if (result.IsFailed)
+            {
+                if (result.HasError(error => error.Message.Contains("User with id not exists")))
+                {
+                    return NotFound(result.Errors);
+                }
+                return BadRequest(result.Errors);
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetProfile(Guid userId)
+        {
+            var result = await _profileService.GetProfile(userId);
+            
+            if (result.IsFailed)
+            {
+                if (result.HasError(error => error.Message == "User does not have access to this profile"))
+                {
+                    return Forbid();
+                }
+                return NotFound();
+            }
+
             return Ok(result.Value);
         }
-        
-        return BadRequest(result.Errors);
     }
 }

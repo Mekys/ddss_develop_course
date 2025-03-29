@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{3890885B-783A-41BD-BEC1-6A84A6033B56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{D09243C9-282E-407E-AE4C-BBB626C703AA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B5CCE3BF-FC56-4363-9206-68DD9E25B4FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{E4029873-648D-4D10-8479-AF1C4E6DF1E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,15 +37,18 @@ Global
 		{3890885B-783A-41BD-BEC1-6A84A6033B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3890885B-783A-41BD-BEC1-6A84A6033B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3890885B-783A-41BD-BEC1-6A84A6033B56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D09243C9-282E-407E-AE4C-BBB626C703AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D09243C9-282E-407E-AE4C-BBB626C703AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D09243C9-282E-407E-AE4C-BBB626C703AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D09243C9-282E-407E-AE4C-BBB626C703AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4029873-648D-4D10-8479-AF1C4E6DF1E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4029873-648D-4D10-8479-AF1C4E6DF1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4029873-648D-4D10-8479-AF1C4E6DF1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4029873-648D-4D10-8479-AF1C4E6DF1E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9283EA90-41AA-49A2-9A97-9FC3CB27434F}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4029873-648D-4D10-8479-AF1C4E6DF1E0} = {B5CCE3BF-FC56-4363-9206-68DD9E25B4FB}
 	EndGlobalSection
 EndGlobal

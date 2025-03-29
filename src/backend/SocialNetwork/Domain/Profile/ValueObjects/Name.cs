@@ -21,12 +21,12 @@ public record Name
         first = first?.Trim();
         second = second?.Trim();
         patronymic = patronymic?.Trim();
-        
+
         if (string.IsNullOrEmpty(first))
         {
             return Result.Fail(new RequiredFieldNotSet("FirstName"));
         }
-        
+
         if (string.IsNullOrEmpty(second))
         {
             return Result.Fail(new RequiredFieldNotSet("SecondName"));

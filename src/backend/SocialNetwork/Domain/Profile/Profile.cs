@@ -8,13 +8,14 @@ namespace Domain.Profile;
 
 public class Profile
 {
+    private Profile(){}
     private Profile(
-        string login, 
+        string login,
         Name names)
     {
         Login = login;
         Names = names;
-        
+
         Id = Guid.NewGuid();
         CreatedAtUtc = DateTime.UtcNow;
         LastLoginAtUtc = DateTime.UtcNow;
@@ -29,12 +30,12 @@ public class Profile
     public DateTime LastLoginAtUtc { get; set; }
     public Name Names { get; set; }
     public Availability AvailabilityLevel { get; set; }
-    
+
     /// <summary>
     /// Список подписчиков  
     /// </summary>
     public IReadOnlyCollection<Guid> Subscribers { get; set; }
-    
+
     /// <summary>
     /// Список подписок
     /// </summary>
@@ -50,7 +51,7 @@ public class Profile
         {
             return Result.Fail(new RequiredFieldNotSet(nameof(Login)));
         }
-        
+
         var nameCreateResult = Name.Create(firstName, lastName, patronymic);
         if (nameCreateResult.IsFailed)
         {
@@ -66,42 +67,42 @@ public class Profile
         {
             return Result.Fail(new AlreadySubscribedError());
         }
-        
-        Subscribers = [..Subscribers, subscriberId];
+
+        Subscribers = [.. Subscribers, subscriberId];
         return Result.Ok();
     }
-    
+
     public Result AddFollower(Guid followerId, IMediator? mediator = null)
     {
         if (Followers.Contains(followerId))
         {
             return Result.Fail(new AlreadyFollowedError());
         }
-        
-        Followers = [..Followers, followerId];
+
+        Followers = [.. Followers, followerId];
         mediator?.Publish(new UserFollowed(Id, followerId));
         return Result.Ok();
     }
- 
+
     public Result RemoveFollower(Guid followerId)
     {
         if (!Followers.Contains(followerId))
         {
             return Result.Fail(new NotFollowedError());
         }
-        
+
         Followers = Followers.Where(x => x != followerId).ToList();
         return Result.Ok();
     }
-    
+
     public Result RemoveSubscriber(Guid subscriberId)
     {
         if (!Subscribers.Contains(subscriberId))
         {
             return Result.Fail(new NotSubscribedError());
         }
-        
-        Followers = Followers.Where(x => x != subscriberId).ToList();
+
+        Subscribers = Subscribers.Where(x => x != subscriberId).ToList();
         return Result.Ok();
     }
 }
