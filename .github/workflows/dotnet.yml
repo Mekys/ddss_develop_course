@@ -26,4 +26,4 @@ jobs:
       - name: Build
         run: dotnet build src/backend/SocialNetwork --no-restore
       - name: Test
-        run: dotnet test src/backend/SocialNetwork --no-build --verbosity normal
+        run: dotnet test src/backend/SocialNetwork --no-build -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=opencover
