@@ -1,3 +1,4 @@
 /src/backend/SocialNetwork/.idea/
 /src/backend/SocialNetwork/**/bin/
 /src/backend/SocialNetwork/**/obj/
+/pgdata/
