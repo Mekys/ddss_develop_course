@@ -10,11 +10,11 @@ public class Media
     public string Url { get; set; }
 
     private Media(
-        string mime, 
+        string mime,
         string url)
     {
         Id = Guid.NewGuid();
-            
+
         Mime = mime;
         Url = url;
     }
@@ -27,7 +27,7 @@ public class Media
         {
             return Result.Fail(new RequiredFieldNotSet(nameof(mime)));
         }
-            
+
         if (string.IsNullOrWhiteSpace(url))
         {
             return Result.Fail(new RequiredFieldNotSet(nameof(url)));

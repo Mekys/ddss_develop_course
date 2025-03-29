@@ -21,8 +21,8 @@ public class DdssContext : DbContext
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    { 
-        base.OnModelCreating(modelBuilder); 
+    {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new PostConfiguration());
         modelBuilder.ApplyConfiguration(new ProfileConfiguration());
     }
@@ -34,46 +34,46 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
     {
         // Primary key
         builder.HasKey(p => p.Id);
-        
+
         // Properties
         builder.Property(p => p.AuthorId)
             .IsRequired();
-            
+
         builder.Property(p => p.ProfileId)
             .IsRequired();
-            
+
         builder.Property(p => p.CreatedAtUtc)
             .IsRequired();
-            
+
         builder.Property(p => p.IsRemoved)
             .IsRequired()
             .HasDefaultValue(false);
-            
+
         // Value object conversion
         builder.OwnsOne(p => p.PostAvailability, post =>
         {
             post
                 .Property(p => p.Post)
                 .HasColumnName("PostAvailability_Post");
-            
+
             post
                 .Property(p => p.Comment)
                 .HasColumnName("PostAvailability_Comment");
-            
+
             post
                 .Property(p => p.Like)
                 .HasColumnName("PostAvailability_Like");
         });
-            
+
         builder.OwnsMany(p => p.Media, media =>
         {
             media.WithOwner().HasForeignKey("PostId");
             media.ToTable("PostMedia");
             media.HasKey(m => m.Id);
         });
-        
+
         builder.HasMany(p => p.Comments)
-            .WithOne() 
+            .WithOne()
             .HasForeignKey(c => c.PostId)
             .OnDelete(DeleteBehavior.Cascade);
 
@@ -91,40 +91,40 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
     {
         // Primary key
         builder.HasKey(p => p.Id);
-        
+
         // Properties
         builder.Property(p => p.Login)
             .IsRequired()
             .HasMaxLength(100); // Adjust length as needed
-            
+
         builder.Property(p => p.CreatedAtUtc)
             .IsRequired();
-            
+
         builder.Property(p => p.LastLoginAtUtc)
             .IsRequired();
-            
+
         // Value object conversion for Name
         builder.OwnsOne(p => p.Names, names =>
         {
             names.Property(n => n.First)
                 .IsRequired()
                 .HasMaxLength(100);
-                
+
             names.Property(n => n.Second)
                 .IsRequired()
                 .HasMaxLength(100);
-                
+
             names.Property(n => n.Patronymic)
                 .HasMaxLength(100);
         });
-        
+
         // Enum conversion for Availability
         builder.Property(p => p.AvailabilityLevel)
             .HasConversion(
                 v => v.ToString(),
                 v => (Availability)Enum.Parse(typeof(Availability), v))
             .IsRequired();
-            
+
         // Collections of Guids (Subscribers and Followers)
         builder.Property(p => p.Subscribers)
             .HasConversion(
@@ -137,7 +137,7 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
                     (c1, c2) => c1.SequenceEqual(c2),
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                     c => c.ToList()));
-            
+
         builder.Property(p => p.Followers)
             .HasConversion(
                 v => string.Join(',', v),
@@ -149,7 +149,7 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
                     (c1, c2) => c1.SequenceEqual(c2),
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                     c => c.ToList()));
-        
+
         builder.ToTable("Profiles");
     }
 }

@@ -15,16 +15,16 @@ namespace UnitTests.Domain
         private readonly Guid _validCommentAuthorId = Guid.NewGuid();
         private readonly string _validCommentText = "Test comment";
         private readonly PostAvailability _validPostAvailability = PostAvailability.Default;
-        
+
         private readonly string _validMimeType = "image/jpeg";
         private readonly string _validMediaUrl = "https://example.com/image.jpg";
         private readonly List<Media> _validMedia;
 
         public PostShould()
         {
-            _validMedia = new List<Media> 
-            { 
-                Media.Create(_validMimeType, _validMediaUrl).Value 
+            _validMedia = new List<Media>
+            {
+                Media.Create(_validMimeType, _validMediaUrl).Value
             };
         }
 
@@ -290,7 +290,7 @@ namespace UnitTests.Domain
             // Assert
             Assert.True(result1.IsFailed);
             Assert.Contains(result1.Errors, e => e.Message.Contains("mime is required"));
-            
+
             Assert.True(result2.IsFailed);
             Assert.Contains(result2.Errors, e => e.Message.Contains("url is required"));
         }

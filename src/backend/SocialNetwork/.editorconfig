@@ -5,6 +5,9 @@ root = true
 
 #### Core EditorConfig Options ####
 
+[*.{cs,vb}]
+dotnet_diagnostic.IDE0005.severity = warning
+
 # Indentation and spacing
 indent_size = 4
 indent_style = space

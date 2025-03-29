@@ -1,3 +1,5 @@
+using Application.Dto;
+
 namespace Application.Services;
 
 public class RegisterDto

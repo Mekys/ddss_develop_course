@@ -10,10 +10,7 @@ namespace Application.Services;
 public class ProfileService : IProfileService
 {
     private readonly IProfileRepository _profileRepository;
-    public ProfileService(IProfileRepository profileRepository)
-    {
-        _profileRepository = profileRepository;
-    }
+    public ProfileService(IProfileRepository profileRepository) => _profileRepository = profileRepository;
     public async Task<Result<Profile>> Register(RegisterDto registerDto)
     {
         var existenceUser = await _profileRepository.GetByLogin(registerDto.Login);
@@ -21,7 +18,7 @@ public class ProfileService : IProfileService
         {
             return Result.Fail("User with login exists");
         }
-        
+
         var createdUserResult = Profile.Create(registerDto.Login, registerDto.Name?.First, registerDto.Name?.Second, registerDto.Name?.Patronymic);
         if (createdUserResult.IsFailed)
         {
@@ -39,7 +36,7 @@ public class ProfileService : IProfileService
         {
             return Result.Fail("User with id not exists");
         }
-        
+
         var subscriberUser = await _profileRepository.GetById(subscriberId);
         if (subscriberUser is null)
         {
@@ -58,7 +55,7 @@ public class ProfileService : IProfileService
             _profileRepository.Update(subscriberUser),
             _profileRepository.Update(subscribeToUser)
         );
-        
+
         return Result.Ok();
     }
 

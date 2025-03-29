@@ -34,5 +34,5 @@ public class MediaDto
 
 public enum PostAvailabilityDto
 {
-    
+
 }

@@ -9,7 +9,7 @@ namespace Domain.Post
 {
     public class Post
     {
-        private Post(){}
+        private Post() { }
         public Guid Id { get; set; }
         public Guid AuthorId { get; set; }
         public Guid ProfileId { get; set; }

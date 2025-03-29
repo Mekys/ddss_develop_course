@@ -9,7 +9,6 @@ namespace API.Controllers
     public class ProfilesController : ControllerBase
     {
         private readonly IProfileService _profileService;
-
         public ProfilesController(IProfileService profileService)
         {
             _profileService = profileService;
@@ -19,7 +18,7 @@ namespace API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             var result = await _profileService.Register(registerDto);
-            
+
             if (result.IsFailed)
             {
                 if (result.HasError(error => error.Message == "User with login exists"))
@@ -30,8 +29,8 @@ namespace API.Controllers
             }
 
             return CreatedAtAction(
-                nameof(GetProfile), 
-                new { userId = result.Value.Id }, 
+                nameof(GetProfile),
+                new { userId = result.Value.Id },
                 result.Value);
         }
 
@@ -39,7 +38,7 @@ namespace API.Controllers
         public async Task<IActionResult> Subscribe(Guid subscriberId, Guid subscribeToId)
         {
             var result = await _profileService.Subscribe(subscriberId, subscribeToId);
-            
+
             if (result.IsFailed)
             {
                 if (result.HasError(error => error.Message.Contains("User with id not exists")))
@@ -56,7 +55,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetProfile(Guid userId)
         {
             var result = await _profileService.GetProfile(userId);
-            
+
             if (result.IsFailed)
             {
                 if (result.HasError(error => error.Message == "User does not have access to this profile"))

@@ -2,7 +2,7 @@ namespace Domain.Post.ValueObjects;
 
 public record PostAvailability
 {
-    private PostAvailability(){}
+    private PostAvailability() { }
     public Availability Comment { get; set; }
     public Availability Like { get; set; }
     public Availability Post { get; set; }

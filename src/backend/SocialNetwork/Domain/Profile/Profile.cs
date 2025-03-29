@@ -8,7 +8,7 @@ namespace Domain.Profile;
 
 public class Profile
 {
-    private Profile(){}
+    private Profile() { }
     private Profile(
         string login,
         Name names)
@@ -20,26 +20,26 @@ public class Profile
         CreatedAtUtc = DateTime.UtcNow;
         LastLoginAtUtc = DateTime.UtcNow;
         AvailabilityLevel = Availability.Public;
-        Subscribers = new List<Guid>();
-        Followers = new List<Guid>();
+        Subscribers = [];
+        Followers = [];
     }
 
-    public Guid Id { get; set; }
-    public DateTime CreatedAtUtc { get; set; }
-    public string Login { get; set; }
-    public DateTime LastLoginAtUtc { get; set; }
-    public Name Names { get; set; }
-    public Availability AvailabilityLevel { get; set; }
+    public Guid Id { get; init; }
+    public DateTime CreatedAtUtc { get; init; }
+    public string Login { get; init; } = null!;
+    public DateTime LastLoginAtUtc { get; init; }
+    public Name Names { get; init; } = null!;
+    public Availability AvailabilityLevel { get; init; }
 
     /// <summary>
     /// Список подписчиков  
     /// </summary>
-    public IReadOnlyCollection<Guid> Subscribers { get; set; }
+    public IReadOnlyCollection<Guid> Subscribers { get; set; } = null!;
 
     /// <summary>
     /// Список подписок
     /// </summary>
-    public IReadOnlyCollection<Guid> Followers { get; set; }
+    public IReadOnlyCollection<Guid> Followers { get; set; } = null!;
 
     public static Result<Profile> Create(
         string login,
