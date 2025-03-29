@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Domain.Post.Entities;
+﻿using Domain.Post.Entities;
 using Domain.Post.Events;
 using Domain.Post.ValueObjects;
 using FluentResults;

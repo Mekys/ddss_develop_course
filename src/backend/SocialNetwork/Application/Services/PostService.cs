@@ -1,4 +1,3 @@
-using Application.Dto.Profile;
 using Application.Repositories;
 using Application.Services.Interfaces;
 using Domain.Post;

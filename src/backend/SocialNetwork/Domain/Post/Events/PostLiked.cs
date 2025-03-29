@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Post.ValueObjects;
+﻿using Domain.Post.ValueObjects;
 using MediatR;
 
 namespace Domain.Post.Events

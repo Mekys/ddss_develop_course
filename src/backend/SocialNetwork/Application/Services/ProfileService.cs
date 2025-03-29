@@ -2,7 +2,6 @@ using Application.Repositories;
 using Application.Services.Interfaces;
 using Domain.Post.ValueObjects;
 using Domain.Profile;
-using Domain.Profile.ValueObjects;
 using FluentResults;
 
 namespace Application.Services;
