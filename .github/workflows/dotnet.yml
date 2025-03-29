@@ -20,10 +20,10 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Format
-        run: dotnet format src\backend\SocialNetwork --verify-no-changes --verbosity diagnostic
+        run: dotnet format src/backend/SocialNetwork --verify-no-changes --verbosity diagnostic
       - name: Restore dependencies
-        run: dotnet restore src\backend\SocialNetwork
+        run: dotnet restore src/backend/SocialNetwork
       - name: Build
-        run: dotnet build src\backend\SocialNetwork --no-restore
+        run: dotnet build src/backend/SocialNetwork --no-restore
       - name: Test
-        run: dotnet test src\backend\SocialNetwork --no-build --verbosity normal
+        run: dotnet test src/backend/SocialNetwork --no-build --verbosity normal
