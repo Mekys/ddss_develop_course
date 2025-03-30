@@ -2,10 +2,8 @@ using Application.Repositories;
 using Application.Services;
 using Application.Services.Interfaces;
 using Infrastructure;
-using Infrastructure.Enrichers;
 using Infrastructure.Repository;
 using Serilog;
-using Serilog.Sinks.Graylog;
 
 var builder = WebApplication.CreateBuilder(args);
 
