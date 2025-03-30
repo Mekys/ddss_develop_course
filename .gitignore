@@ -2,3 +2,4 @@
 /src/backend/SocialNetwork/**/bin/
 /src/backend/SocialNetwork/**/obj/
 /pgdata/
+.env
